@@ -11,8 +11,10 @@ pool_stride = 2
 
 def build_segnet(kernel_size=3, pool_size=2, conv_stride=1, pool_stride=2):
     model = keras.models.Sequential()
-    model.add(keras.layers.InputLayer(input_shape=(64, 64, 3)))
-    model.add(keras.layers.Conv2D(filters=64, kernel_size=kernel_size, strides=conv_stride, padding='same', name='conv_1'))
+    #model.add(keras.layers.InputLayer(input_shape=(64, 64, 3)))
+    # cannot add the input layer outside the conv layer, if add it outside, it will cause error when load trained model
+    model.add(keras.layers.Conv2D(filters=64, kernel_size=kernel_size, strides=conv_stride, padding='same',
+                                  name='conv_1', input_shape=(64, 64, 3)))
     model.add(keras.layers.BatchNormalization())
     model.add(keras.layers.Activation('relu'))
     model.add(keras.layers.Conv2D(filters=64, kernel_size=kernel_size, strides=conv_stride, padding='same', name='conv_2'))
